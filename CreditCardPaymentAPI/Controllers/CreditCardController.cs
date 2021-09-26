@@ -24,7 +24,7 @@ namespace CreditCardPaymentAPI.Controllers
         /// Constructor
         /// </summary>
         /// <param name="mapper">Instance of automapper</param>
-        /// <param name="creditCardEventProducer">Instance of credit card event producer</param>
+        /// <param name="creditCardEventProducer">Injected instance of credit card event producer by the IoC container</param>
         public CreditCardController(IMapper mapper, ICreditCardEventProducer creditCardEventProducer)
         {
             _mapper = mapper;
