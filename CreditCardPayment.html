@@ -1,0 +1,57 @@
+<html>
+<head>
+    <script type="text/javascript">
+        const uri = 'https://localhost:5001/api/CreditCard/';
+        function addItem() {
+            const nameTextbox = document.getElementById('name');
+            const cardNumberTextBox = document.getElementById('cardNumber');
+            const expiresMonthTextBox = document.getElementById('expiresMonth');
+            const expiresYearTextbox = document.getElementById('expiresYear');
+            const cvcTextbox = document.getElementById('cvc');
+
+            const item = {
+                cardHolderName: nameTextbox.value.trim(),
+                expiresMonth: expiresMonthTextBox.value,
+                expiresYear: expiresYearTextbox.value,
+                cardNumber: cardNumberTextBox.value,
+                cvc: parseInt(cvcTextbox.value)
+
+            };
+
+            var json = JSON.stringify(item);
+            console.log(json);
+
+            fetch(uri, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: json
+            })
+                .then(response => response.json())
+                .then(() => {
+                    nameTextbox.value = '';
+                    cardNumberTextBox.value = '';
+                    expiresYearTextbox.value = '';
+                    expiresMonthTextBox.value = '';
+                    cvcTextbox.value = '';
+                })
+                .catch(error => console.error('Unable to add item.', error));
+        }
+    </script>
+</head>
+<body>
+    <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
+        <label for="name">Card holder:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="cardNumber">Card number:</label>
+        <input type="text" id="cardNumber" name="cardNumber"><br><br>
+        <label for="expiresMonth">Card expires:</label>
+        <input type="text" id="expiresMonth" name="expiresMonth"> <input type="text" id="expiresYear" name="expiresYear"> <br><br>
+        <label for="cvc">CVC:</label>
+        <input type="text" id="cvc" name="cvc"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
